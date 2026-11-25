@@ -47,7 +47,7 @@ jobs:
             echo "::error::Secret KEYSTORE_BASE64 fehlt (siehe README)"
             exit 1
           fi
-          echo "SIGNING_STORE_PASSWORD: ${#SP} Zeichen (erwartet 24), SIGNING_KEY_ALIAS: ${#KA} Zeichen (erwartet 8), SIGNING_KEY_PASSWORD: ${#KP} Zeichen (erwartet 24)"
+          echo "SIGNING_STORE_PASSWORD: $(printf '%s' "$SP" | tr -d '[:space:]' | wc -c) Zeichen ohne Leerraum (erwartet 24), SIGNING_KEY_ALIAS: ${#KA} Zeichen (erwartet 8), SIGNING_KEY_PASSWORD: ${#KP} Zeichen (erwartet 24)"
           CLEAN=$(printf '%s' "$KEYSTORE_BASE64" | tr -d '[:space:]')
           BAD=$(printf '%s' "$CLEAN" | tr -d 'A-Za-z0-9+/=' | wc -c)
           echo "KEYSTORE_BASE64: ${#CLEAN} Zeichen, davon $BAD ungueltig (erwartet: 5648 Zeichen, 0 ungueltig)"
@@ -72,7 +72,12 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           GUARDIAN_API_KEY: ${{ secrets.GUARDIAN_API_KEY }}
           DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
-        run: ./gradlew assembleRelease --no-daemon
+        # Versehentlich mitkopierte Leerzeichen/Zeilenumbrüche aus den Secrets entfernen.
+        run: |
+          export SIGNING_STORE_PASSWORD="$(printf '%s' "$SIGNING_STORE_PASSWORD" | tr -d '[:space:]')"
+          export SIGNING_KEY_ALIAS="$(printf '%s' "$SIGNING_KEY_ALIAS" | tr -d '[:space:]')"
+          export SIGNING_KEY_PASSWORD="$(printf '%s' "$SIGNING_KEY_PASSWORD" | tr -d '[:space:]')"
+          ./gradlew assembleRelease --no-daemon
 
       - name: APK umbenennen, Signatur prüfen, update.json erzeugen
         run: |
