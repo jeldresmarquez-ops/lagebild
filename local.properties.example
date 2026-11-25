@@ -1,0 +1,9 @@
+# Kopiere diese Datei nach "local.properties" (wird NICHT ins Repository hochgeladen).
+# sdk.dir wird von Android Studio automatisch gesetzt.
+# sdk.dir=C\:\\Users\\DEIN-NAME\\AppData\\Local\\Android\\Sdk
+
+# Kostenloser Schlüssel: https://open-platform.theguardian.com/access/
+GUARDIAN_API_KEY=
+
+# Optional, DeepL API Free: https://www.deepl.com/pro-api
+DEEPL_API_KEY=

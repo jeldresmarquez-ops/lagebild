@@ -1,0 +1,5 @@
+- Erste Version von Lagebild
+- tagesschau, Deutschlandfunk, ZDFheute, rbb24, DW, SZ, FAZ, Zeit, Spiegel, Handelsblatt, Tagesspiegel
+- Guardian, BBC, Al Jazeera, FT, Economist (automatisch übersetzt)
+- Gefahrenmeldungen (NINA, DWD) und Verkehrsstörungen für Berlin
+- Updates direkt in der App

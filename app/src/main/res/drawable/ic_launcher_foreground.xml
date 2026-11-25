@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stilisiertes Zeitungsblatt mit Signalpunkt -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,32h40a4,4 0,0 1,4 4v36a4,4 0,0 1,-4 4H34a4,4 0,0 1,-4 -4V36a4,4 0,0 1,4 -4z" />
+    <path
+        android:fillColor="#0B3D6E"
+        android:pathData="M37,40h22v4H37zM37,49h34v3H37zM37,56h34v3H37zM37,63h24v3H37z" />
+    <path
+        android:fillColor="#E3001B"
+        android:pathData="M68,42m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0" />
+</vector>

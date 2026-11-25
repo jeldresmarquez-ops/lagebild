@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lagebild</string>
+    <string name="channel_breaking">Breaking News</string>
+    <string name="channel_breaking_desc">Eilmeldungen und wichtige Top-Meldungen</string>
+    <string name="channel_warnings">Gefahrenmeldungen</string>
+    <string name="channel_warnings_desc">Warnungen von NINA (BBK) und dem Deutschen Wetterdienst für Berlin</string>
+    <string name="channel_traffic">Verkehr</string>
+    <string name="channel_traffic_desc">Störungen auf deinen Lieblingslinien</string>
+    <string name="channel_updates">App-Updates</string>
+    <string name="channel_updates_desc">Hinweise auf neue Versionen und Download-Fortschritt</string>
+</resources>
