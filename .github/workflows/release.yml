@@ -39,11 +39,15 @@ jobs:
       - name: Keystore aus Secret wiederherstellen
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          SP: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          KA: ${{ secrets.SIGNING_KEY_ALIAS }}
+          KP: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: |
           if [ -z "$KEYSTORE_BASE64" ]; then
             echo "::error::Secret KEYSTORE_BASE64 fehlt (siehe README)"
             exit 1
           fi
+          echo "SIGNING_STORE_PASSWORD: ${#SP} Zeichen (erwartet 24), SIGNING_KEY_ALIAS: ${#KA} Zeichen (erwartet 8), SIGNING_KEY_PASSWORD: ${#KP} Zeichen (erwartet 24)"
           CLEAN=$(printf '%s' "$KEYSTORE_BASE64" | tr -d '[:space:]')
           BAD=$(printf '%s' "$CLEAN" | tr -d 'A-Za-z0-9+/=' | wc -c)
           echo "KEYSTORE_BASE64: ${#CLEAN} Zeichen, davon $BAD ungueltig (erwartet: 5648 Zeichen, 0 ungueltig)"
