@@ -61,7 +61,8 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             // Nur Handy-Prozessoren (ARM) einpacken – spart ~35 MB (ML Kit bringt große native Bibliotheken mit).
-            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+            // Mit -PallAbis=true auch für den Emulator (x86) bauen – nur zum Testen.
+            if (project.findProperty("allAbis") != "true") ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
             val cfg = signingConfigs.getByName("release")
             if (cfg.storeFile != null) signingConfig = cfg
         }
