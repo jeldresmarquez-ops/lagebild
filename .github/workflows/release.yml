@@ -44,6 +44,13 @@ jobs:
             echo "::error::Secret KEYSTORE_BASE64 fehlt (siehe README)"
             exit 1
           fi
+          CLEAN=$(printf '%s' "$KEYSTORE_BASE64" | tr -d '[:space:]')
+          BAD=$(printf '%s' "$CLEAN" | tr -d 'A-Za-z0-9+/=' | wc -c)
+          echo "KEYSTORE_BASE64: ${#CLEAN} Zeichen, davon $BAD ungueltig (erwartet: 5648 Zeichen, 0 ungueltig)"
+          if [ "$BAD" != "0" ]; then
+            echo "::error::KEYSTORE_BASE64 enthaelt keine gueltigen Base64-Daten - bitte den Inhalt von '1 KEYSTORE_BASE64.txt' neu eintragen"
+            exit 1
+          fi
           # Leerzeichen/Zeilenumbrueche aus dem kopierten Wert entfernen, dann dekodieren.
           printf '%s' "$KEYSTORE_BASE64" | tr -d '[:space:]' | base64 --decode > "$RUNNER_TEMP/release.jks"
           echo "Keystore: $(wc -c < "$RUNNER_TEMP/release.jks") Bytes"
