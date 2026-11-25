@@ -6,6 +6,7 @@ import de.lagebild.app.data.remote.VbbLine
 import de.lagebild.app.data.remote.VbbRemark
 import de.lagebild.app.data.repository.TransitRepository
 import de.lagebild.app.domain.model.Article
+import de.lagebild.app.domain.model.Category
 import de.lagebild.app.domain.model.DisruptionKind
 import de.lagebild.app.domain.model.TransitStation
 import de.lagebild.app.notifications.QuietHours
@@ -90,5 +91,60 @@ class DomainTest {
 
         val all = TransitRepository.extractDisruptions(station, deps, emptySet())
         assertThat(all.count { it.kind == DisruptionKind.WARNING }).isEqualTo(2)
+    }
+
+    @Test
+    fun `Ueberblick nimmt je Ressort die zwei meistberichteten Themen`() {
+        val now = 100L * 60 * 60 * 1000
+        fun a(id: String, src: String, title: String, cat: Category, ageH: Long = 1, top: Boolean = false) =
+            article(id, src, title, time = now - ageH * 60 * 60 * 1000).copy(category = cat, isTop = top)
+        val list = listOf(
+            // Politik: Thema „Haushalt“ bei drei Quellen, „Rente“ bei zwei, „Wahlrecht“ bei einer
+            a("p1", "tagesschau", "Bundestag beschließt Haushalt für 2027", Category.POLITIK),
+            a("p2", "dlf", "Haushalt 2027: Bundestag beschließt Etat", Category.POLITIK),
+            a("p3", "taz", "Bundestag beschließt umstrittenen Haushalt 2027", Category.POLITIK),
+            a("p4", "ntv", "Rentenpaket: Koalition einigt sich auf Rentenniveau", Category.POLITIK),
+            a("p5", "zdf", "Koalition einigt sich beim Rentenpaket auf Rentenniveau", Category.POLITIK),
+            a("p6", "dw", "Neues Wahlrecht vor Gericht", Category.POLITIK, top = true),
+            // Sport: nur eine Meldung, plus eine zu alte
+            a("s1", "ntv", "Bayern gewinnt Spitzenspiel", Category.SPORT),
+            a("s2", "taz", "Alte Meldung vom Vortag", Category.SPORT, ageH = 30),
+            // anderes Ressort zählt nicht
+            a("t1", "golem", "Neues Smartphone vorgestellt", Category.TECHNOLOGIE),
+        )
+        val result = FeedSelector.briefing(list, now = now)
+        assertThat(result.map { it.first }).containsExactly(Category.POLITIK, Category.SPORT).inOrder()
+        val politik = result[0].second
+        assertThat(politik).hasSize(2)
+        assertThat(politik[0].sourceCount).isEqualTo(3)
+        assertThat(politik[1].sourceCount).isEqualTo(2)
+        assertThat(result[1].second.map { it.lead.id }).containsExactly("s1")
+    }
+
+    @Test
+    fun `Ueberblick bevorzugt bei Gleichstand Aufmacher`() {
+        val now = 100L * 60 * 60 * 1000
+        val list = listOf(
+            article("w1", "ntv", "Dax schließt kaum verändert", time = now - 1000).copy(category = Category.WIRTSCHAFT, isTop = false),
+            article("w2", "dlf", "Inflation sinkt im November deutlich", time = now - 5000).copy(category = Category.WIRTSCHAFT, isTop = true),
+        )
+        val result = FeedSelector.briefing(list, perCategory = 1, now = now)
+        assertThat(result.single().second.single().lead.id).isEqualTo("w2")
+    }
+
+    @Test
+    fun `Ueberblick zaehlt Quellen auch aus anderen Ressorts mit`() {
+        val now = 100L * 60 * 60 * 1000
+        val t = now - 60_000
+        val list = listOf(
+            // Dasselbe Thema: taz führt es unter Politik, tagesschau unter Inland, DLF nur im Top-Feed
+            article("a", "taz", "Bundestag streitet über Wehrpflicht", time = t).copy(category = Category.POLITIK),
+            article("b", "tagesschau", "Wehrpflicht: Bundestag streitet über Gesetz", time = t).copy(category = Category.NATIONAL),
+            article("c", "dlf", "Streit im Bundestag über Wehrpflicht", time = t).copy(category = null),
+            article("d", "ntv", "Kanzler reist nach Paris", time = t).copy(category = Category.POLITIK),
+        )
+        val politik = FeedSelector.briefing(list, now = now).single { it.first == Category.POLITIK }.second
+        assertThat(politik.first().sourceCount).isEqualTo(3)
+        assertThat(politik.map { it.sourceCount }).containsExactly(3, 1).inOrder()
     }
 }

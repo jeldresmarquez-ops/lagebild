@@ -1,5 +1,4 @@
-- Erste Version von Lagebild
-- tagesschau, Deutschlandfunk, ZDFheute, rbb24, DW, SZ, FAZ, Zeit, Spiegel, Handelsblatt, Tagesspiegel
-- Guardian, BBC, Al Jazeera, FT, Economist (automatisch übersetzt)
-- Gefahrenmeldungen (NINA, DWD) und Verkehrsstörungen für Berlin
-- Updates direkt in der App
+- Neu: „Überblick“ auf der Startseite – je zwei Top-Themen aus Politik, Wirtschaft & Finanzen, Wissenschaft und Sport
+- Die App lädt neu, wenn du sie nach mehr als 15 Minuten wieder öffnest
+- Nur noch frei lesbare Quellen (ohne Abo), neu: n-tv, taz, NPR, scinexx, netzpolitik.org
+- „Stand“-Zeit wird sofort nach dem Laden aktualisiert

@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.lagebild.app.domain.model.Article
+import de.lagebild.app.domain.model.Category
 import de.lagebild.app.domain.model.StoryGroup
 import de.lagebild.app.ui.components.ArticleActions
 import de.lagebild.app.ui.components.DisruptionRow
@@ -84,7 +85,9 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
     LaunchedEffect(refresh.message) {
         refresh.message?.let { snackbar.showSnackbar(it); vm.consumeMessage() }
     }
-    LaunchedEffect(state.selected) { listState.scrollToItem(0) }
+    LaunchedEffect(state.tab) { listState.scrollToItem(0) }
+    // Beim Zurückkehren in die App neu laden, wenn die letzte Abfrage länger her ist.
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) { vm.refreshIfStale() }
 
     Scaffold(
         topBar = {
@@ -102,9 +105,20 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                item { FilterChip(selected = state.selected == null, onClick = { vm.select(null) }, label = { Text("Top") }) }
+                item { FilterChip(selected = state.tab == HomeTab.Top, onClick = { vm.select(HomeTab.Top) }, label = { Text("Top") }) }
+                item {
+                    FilterChip(
+                        selected = state.tab == HomeTab.Briefing,
+                        onClick = { vm.select(HomeTab.Briefing) },
+                        label = { Text("Überblick") },
+                    )
+                }
                 items(state.categories) { c ->
-                    FilterChip(selected = state.selected == c, onClick = { vm.select(c) }, label = { Text(c.label) })
+                    FilterChip(
+                        selected = state.tab == HomeTab.Section(c),
+                        onClick = { vm.select(HomeTab.Section(c)) },
+                        label = { Text(c.label) },
+                    )
                 }
             }
             OfflineBanner(refresh.offline, state.lastSync)
@@ -124,14 +138,48 @@ fun HomeScreen(vm: HomeViewModel = hiltViewModel()) {
                         state.breaking?.let { b ->
                             item(key = "breaking") { BreakingBanner(b, onClick = { actions.open(b) }) }
                         }
-                        if (state.selected == null) item { SectionHeader("Top-Meldungen") }
-                        storyItems(state.groups, actions, firstLarge = true)
-                        if (state.groups.isEmpty() && !refresh.refreshing) {
-                            item { EmptyState("Keine Meldungen", "In dieser Kategorie gibt es gerade nichts Neues.") }
+                        if (state.tab == HomeTab.Briefing) {
+                            briefingItems(state.briefing, state.lastSync, actions)
+                            if (state.briefing.isEmpty() && !refresh.refreshing) {
+                                item { EmptyState("Noch kein Überblick", "In den letzten 24 Stunden gab es keine Meldungen aus diesen Ressorts.") }
+                            }
+                        } else {
+                            if (state.tab == HomeTab.Top) item { SectionHeader("Top-Meldungen") }
+                            storyItems(state.groups, actions, firstLarge = true)
+                            if (state.groups.isEmpty() && !refresh.refreshing) {
+                                item { EmptyState("Keine Meldungen", "In dieser Kategorie gibt es gerade nichts Neues.") }
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+/** Überblick: je Ressort eine Überschrift und die wichtigsten Themen darunter. */
+private fun androidx.compose.foundation.lazy.LazyListScope.briefingItems(
+    sections: List<Pair<Category, List<StoryGroup>>>,
+    lastSync: Long,
+    actions: ArticleActions,
+) {
+    if (sections.isEmpty()) return
+    item(key = "briefing-intro") {
+        Text(
+            "Die wichtigsten Themen der letzten 24 Stunden – je Ressort die zwei, über die die meisten Quellen " +
+                "berichten. Aktualisiert sich automatisch mit jeder Abfrage" +
+                if (lastSync > 0) " (Stand ${formatDateTime(lastSync)})." else ".",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
+        )
+    }
+    sections.forEach { (category, groups) ->
+        item(key = "briefing-${category.name}") {
+            SectionHeader(if (category == Category.WIRTSCHAFT) "Wirtschaft & Finanzen" else category.label)
+        }
+        items(groups.size, key = { "briefing-${category.name}-${groups[it].key}" }) { i ->
+            StoryCard(groups[i], actions, large = false)
         }
     }
 }

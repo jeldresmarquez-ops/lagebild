@@ -149,6 +149,8 @@ class NewsRepository @Inject constructor(
         // Erst speichern (Artikel erscheinen sofort), dann übersetzen. Beim ersten Start
         // lädt ML Kit sonst minutenlang Sprachmodelle, bevor überhaupt etwas angezeigt wird.
         if (withOldTranslations.isNotEmpty()) articleDao.upsertAll(entitiesOf(withOldTranslations))
+        // "Stand" = letzte erfolgreiche Abfrage – schon jetzt setzen, Übersetzungen können dauern.
+        if (!offline) settingsRepository.setLastSyncAt(now)
         val translated = translationService.translateArticles(
             withOldTranslations, settings.translationEngine, settings.wifiOnlyModelDownload,
         )
@@ -156,7 +158,6 @@ class NewsRepository @Inject constructor(
         if (changed.isNotEmpty()) articleDao.upsertAll(entitiesOf(changed))
         articleDao.deleteFetchedBefore(now - CACHE_RETENTION_MS)
         userStateDao.deleteReadBefore(now - 30L * DAY_MS)
-        if (!offline) settingsRepository.setLastSyncAt(now) // "Stand" = letzte erfolgreiche Aktualisierung
 
         RefreshResult(
             newArticles = translated.filter { it.id !in existing },

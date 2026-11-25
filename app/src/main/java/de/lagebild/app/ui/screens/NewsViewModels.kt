@@ -34,9 +34,18 @@ abstract class ArticleActionsViewModel(private val news: NewsRepository) : ViewM
     fun onToggleBookmark(article: Article) = viewModelScope.launch { news.toggleBookmark(article) }
 }
 
+/** Was oben in der Chip-Leiste gewählt ist. */
+sealed interface HomeTab {
+    data object Top : HomeTab
+    data object Briefing : HomeTab
+    data class Section(val category: Category) : HomeTab
+}
+
 data class HomeUiState(
     val categories: List<Category> = Category.entries,
-    val selected: Category? = null,
+    val tab: HomeTab = HomeTab.Top,
+    /** Überblick: je Ressort die wichtigsten Themen (nur gefüllt, wenn der Überblick gewählt ist). */
+    val briefing: List<Pair<Category, List<StoryGroup>>> = emptyList(),
     val groups: List<StoryGroup> = emptyList(),
     val breaking: Article? = null,
     val isEmpty: Boolean = false,
@@ -55,22 +64,30 @@ class HomeViewModel @javax.inject.Inject constructor(
     settings: SettingsRepository,
 ) : ArticleActionsViewModel(news) {
 
-    private val selected = MutableStateFlow<Category?>(null)
+    private val selected = MutableStateFlow<HomeTab>(HomeTab.Top)
     private val _refresh = MutableStateFlow(RefreshUi())
     val refresh: StateFlow<RefreshUi> = _refresh
 
     private val articles = news.observeArticles()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
-    val state: StateFlow<HomeUiState> = combine(articles, selected, settings.settings) { list, cat, s ->
+    val state: StateFlow<HomeUiState> = combine(articles, selected, settings.settings) { list, tab, s ->
         val visibleCats = Category.entries.filter { it !in s.hiddenCategories }
         val all = list.orEmpty()
-        val effective = cat?.takeIf { it in visibleCats }
+        // Ein ausgeblendetes Ressort kann nicht gewählt bleiben.
+        val effective = if (tab is HomeTab.Section && tab.category !in visibleCats) HomeTab.Top else tab
         HomeUiState(
             categories = visibleCats,
-            selected = effective,
-            groups = if (effective == null) FeedSelector.topStories(all) else FeedSelector.category(all, effective),
-            breaking = if (effective == null) FeedSelector.breaking(all) else null,
+            tab = effective,
+            briefing = if (effective == HomeTab.Briefing) {
+                FeedSelector.briefing(all, FeedSelector.BRIEFING_CATEGORIES.filter { it in visibleCats })
+            } else emptyList(),
+            groups = when (effective) {
+                HomeTab.Top -> FeedSelector.topStories(all)
+                HomeTab.Briefing -> emptyList()
+                is HomeTab.Section -> FeedSelector.category(all, effective.category)
+            },
+            breaking = if (effective == HomeTab.Top) FeedSelector.breaking(all) else null,
             isEmpty = list != null && all.isEmpty(),
             lastSync = s.lastSyncAt,
         )
@@ -80,8 +97,8 @@ class HomeViewModel @javax.inject.Inject constructor(
         refresh(reloadSources = true)
     }
 
-    fun select(category: Category?) {
-        selected.value = category
+    fun select(tab: HomeTab) {
+        selected.value = tab
     }
 
     fun refresh(reloadSources: Boolean = false) {
@@ -103,6 +120,12 @@ class HomeViewModel @javax.inject.Inject constructor(
                 onFailure = { RefreshUi(offline = true, message = "Aktualisierung fehlgeschlagen") },
             )
         }
+    }
+
+    /** Beim Öffnen der App: neu laden, wenn die letzte erfolgreiche Abfrage älter als 15 Minuten ist. */
+    fun refreshIfStale() {
+        val last = state.value.lastSync
+        if (last > 0 && System.currentTimeMillis() - last > 15 * 60_000L) refresh()
     }
 
     fun consumeMessage() {
