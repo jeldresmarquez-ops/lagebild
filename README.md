@@ -27,9 +27,9 @@ für Berlin anzeigt. Updates kommen direkt über GitHub Releases – ohne Play S
   Wissenschaft, Wirtschaft, Sport und Technologie. Meldungen zum selben Thema aus verschiedenen Quellen
   werden zusammengefasst („+2 weitere Quellen“).
 - **Berlin:** Warnungen (NINA/BBK und Deutscher Wetterdienst, farbig nach Warnstufe), Störungen auf deinen
-  Lieblingslinien (BVG/S-Bahn/VBB) und Nachrichten von rbb24 und Tagesspiegel.
+  Lieblingslinien (BVG/S-Bahn/VBB) und Nachrichten von rbb24 und taz Berlin.
 - **Suche, Lesezeichen, Teilen**, Pull-to-Refresh, Offline-Modus über den lokalen Cache.
-- **Übersetzung** von Überschrift und Teaser (Guardian, BBC, Al Jazeera, FT, Economist, Nature) mit Google ML Kit
+- **Übersetzung** von Überschrift und Teaser (Guardian, BBC, Al Jazeera, NPR) mit Google ML Kit
   direkt auf dem Gerät – optional DeepL. Ein Button zeigt jederzeit das Original.
 - Artikel öffnen sich **immer beim Original-Anbieter** (Custom Tab). Die App kopiert keine Artikeltexte.
 - **Benachrichtigungen** (eigene Kanäle): Breaking News, Gefahrenmeldungen, Verkehr, App-Updates.
@@ -40,6 +40,12 @@ für Berlin anzeigt. Updates kommen direkt über GitHub Releases – ohne Play S
 
 Alle Feeds wurden am 25.11.2026 abgerufen und mit dem Parser der App getestet.
 
+**Nur frei lesbare Quellen:** Die App enthält nur Anbieter, deren Artikel ohne Abo lesbar sind. Geprüft wurde das
+über die Kennzeichnung `isAccessibleForFree`, die Nachrichtenseiten für Suchmaschinen in jeden Artikel schreiben.
+Entfernt wurden deshalb Spiegel (11 von 12 Stichproben hinter Bezahlschranke), SZ (8/12), Handelsblatt (8/12),
+Spektrum (6/12), FAZ und Tagesspiegel (je 2/12, im Feed nicht erkennbar), Zeit (Z+), FT, Economist und Nature
+(Fachartikel kostenpflichtig). heise wurde wegen heise+ nicht aufgenommen, Golem.de wegen Werbung („Anzeige:“) im Feed.
+
 | Quelle | Zugang | Status | Hinweis |
 |---|---|---|---|
 | tagesschau | offizielle API (`tagesschau.de/api2u`) | ✅ | Liefert ein Eilmeldungs-Kennzeichen. Laut Doku nur für private, nicht-kommerzielle Nutzung. |
@@ -47,15 +53,15 @@ Alle Feeds wurden am 25.11.2026 abgerufen und mit dem Parser der App getestet.
 | ZDFheute | RSS | ✅ | ein Gesamt-Feed |
 | rbb24 | RSS | ✅ | Berlin-Nachrichten, ohne Bilder im Feed |
 | Deutsche Welle | RSS | ✅ | |
-| Süddeutsche, FAZ, Zeit, Spiegel, Handelsblatt, Tagesspiegel | RSS | ✅ | Teile hinter Bezahlschranke (z. B. SZ Plus, F+, Z+) |
-| The Guardian | Open Platform API | ✅ mit Key | kostenloser Developer-Key, nicht-kommerziell |
+| n-tv | RSS | ✅ | Nachrichtensender, komplett frei |
+| taz | RSS | ✅ | frei lesbar (freiwilliges Bezahlmodell), auch Berlin-Ressort |
+| The Guardian | RSS | ✅ | frei lesbar (Spendenmodell), kein API-Key nötig |
 | BBC News | RSS | ✅ | |
 | Al Jazeera English | RSS | ✅ | |
-| Financial Times | RSS | ✅, standardmäßig aus | nur Überschrift und Teaser, Artikel hinter Bezahlschranke |
-| The Economist | RSS | ✅, standardmäßig aus | wie FT |
-| Spektrum der Wissenschaft | RSS | ✅ | |
-| Nature | RSS (`nature.rss`) | ✅ | Ein eigener „News“-Feed existiert nicht mehr (404). Der Haupt-Feed enthält News **und** Fachartikel. |
+| NPR | RSS | ✅ | US-Nachrichten |
 | Quarks (WDR) | RSS | ✅ | |
+| scinexx | RSS | ✅ | Wissenschaftsmagazin |
+| netzpolitik.org | RSS | ✅ | Technik und Digitalpolitik |
 | **Reuters** | – | ❌ weggelassen | Reuters hat seine öffentlichen RSS-Feeds 2020 abgeschaltet. Es gibt nur kostenpflichtige Lizenzen. |
 | **AP** | – | ❌ weggelassen | AP bietet keinen offiziellen offenen Feed bzw. keine offene API an, nur kostenpflichtige Lizenzen. Inoffizielle Feeds oder Scraping nutze ich bewusst nicht. |
 | NINA (BBK) | offene API `warnung.bund.de/api31` | ✅ | Regionalschlüssel Berlin `110000000000` |
@@ -100,15 +106,13 @@ deinem PC installiert sind – siehe [Lokal bauen](#lokal-bauen-und-testen)).
 
 ### 2. API-Keys eintragen
 
-**Guardian (empfohlen, kostenlos):** Auf <https://open-platform.theguardian.com/access/> einen
-„Developer key“ beantragen. Er kommt per E-Mail.
+**Guardian:** braucht keinen Key mehr – die App nutzt die öffentlichen RSS-Feeds.
 
 **DeepL (optional):** Auf <https://www.deepl.com/pro-api> „DeepL API Free“ wählen (500.000 Zeichen/Monat gratis).
 Ohne DeepL übersetzt die App mit Google ML Kit.
 
 Für lokale Builds trägst du die Keys in `local.properties` ein (Vorlage: [`local.properties.example`](local.properties.example)):
 ```properties
-GUARDIAN_API_KEY=dein-guardian-key
 DEEPL_API_KEY=dein-deepl-key:fx
 ```
 Für die GitHub Action legst du sie als **Secrets** an (siehe Schritt 4).
@@ -138,7 +142,6 @@ Im Repository: **Settings → Secrets and variables → Actions → New reposito
 | `SIGNING_STORE_PASSWORD` | Passwort des Keystores |
 | `SIGNING_KEY_ALIAS` | `lagebild` |
 | `SIGNING_KEY_PASSWORD` | Passwort des Schlüssels (meist dasselbe) |
-| `GUARDIAN_API_KEY` | dein Guardian-Key |
 | `DEEPL_API_KEY` | optional, dein DeepL-Key |
 
 Keystore als Base64 in die Zwischenablage kopieren:
@@ -313,6 +316,5 @@ Wichtige Entscheidungen, kurz erklärt:
 | Action: „Tag passt nicht zu VERSION_NAME“ | Tag `v1.2.0` ↔ `VERSION_NAME=1.2.0` angleichen |
 | Action: „Secret KEYSTORE_BASE64 fehlt“ | Schritt 4 der Einrichtung |
 | Android: „App nicht installiert“ beim Update | APK mit anderem Keystore signiert, oder `VERSION_CODE` nicht erhöht |
-| Guardian fehlt | Key in `local.properties` bzw. Secret `GUARDIAN_API_KEY` eintragen, neue Version bauen |
 | Keine Übersetzung | Beim ersten Mal lädt ML Kit ein Sprachmodell (~30 MB, standardmäßig nur im WLAN) |
 | Keine Benachrichtigungen | Android-Einstellungen → Apps → Lagebild → Benachrichtigungen; bei Xiaomi/Huawei/Samsung zusätzlich den Akku-Optimierer für Lagebild ausschalten |

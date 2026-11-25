@@ -2,189 +2,323 @@
   "schemaVersion": 1,
   "sources": [
     {
-      "id": "tagesschau", "name": "tagesschau", "type": "tagesschau", "language": "de",
-      "group": "Öffentlich-rechtlich", "color": "#0A3B73", "homepage": "https://www.tagesschau.de",
+      "id": "tagesschau",
+      "name": "tagesschau",
+      "type": "tagesschau",
+      "language": "de",
+      "group": "Öffentlich-rechtlich",
+      "color": "#0A3B73",
+      "homepage": "https://www.tagesschau.de",
       "feeds": [
-        { "url": "https://www.tagesschau.de/api2u/homepage", "top": true },
-        { "url": "https://www.tagesschau.de/api2u/news?ressort=inland", "category": "NATIONAL" },
-        { "url": "https://www.tagesschau.de/api2u/news?ressort=ausland", "category": "INTERNATIONAL" },
-        { "url": "https://www.tagesschau.de/api2u/news?ressort=wirtschaft", "category": "WIRTSCHAFT" },
-        { "url": "https://www.tagesschau.de/api2u/news?ressort=wissen", "category": "WISSENSCHAFT" },
-        { "url": "https://www.tagesschau.de/api2u/news?ressort=sport", "category": "SPORT" }
+        {
+          "url": "https://www.tagesschau.de/api2u/homepage",
+          "top": true
+        },
+        {
+          "url": "https://www.tagesschau.de/api2u/news?ressort=inland",
+          "category": "NATIONAL"
+        },
+        {
+          "url": "https://www.tagesschau.de/api2u/news?ressort=ausland",
+          "category": "INTERNATIONAL"
+        },
+        {
+          "url": "https://www.tagesschau.de/api2u/news?ressort=wirtschaft",
+          "category": "WIRTSCHAFT"
+        },
+        {
+          "url": "https://www.tagesschau.de/api2u/news?ressort=wissen",
+          "category": "WISSENSCHAFT"
+        },
+        {
+          "url": "https://www.tagesschau.de/api2u/news?ressort=sport",
+          "category": "SPORT"
+        }
       ]
     },
     {
-      "id": "dlf", "name": "Deutschlandfunk", "type": "rss", "language": "de",
-      "group": "Öffentlich-rechtlich", "color": "#1B4F8A", "homepage": "https://www.deutschlandfunk.de",
+      "id": "dlf",
+      "name": "Deutschlandfunk",
+      "type": "rss",
+      "language": "de",
+      "group": "Öffentlich-rechtlich",
+      "color": "#1B4F8A",
+      "homepage": "https://www.deutschlandfunk.de",
       "feeds": [
-        { "url": "https://www.deutschlandfunk.de/nachrichten-100.rss", "top": true },
-        { "url": "https://www.deutschlandfunk.de/politikportal-100.rss", "category": "POLITIK" },
-        { "url": "https://www.deutschlandfunk.de/wirtschaft-106.rss", "category": "WIRTSCHAFT" },
-        { "url": "https://www.deutschlandfunk.de/wissen-106.rss", "category": "WISSENSCHAFT" }
+        {
+          "url": "https://www.deutschlandfunk.de/nachrichten-100.rss",
+          "top": true
+        },
+        {
+          "url": "https://www.deutschlandfunk.de/politikportal-100.rss",
+          "category": "POLITIK"
+        },
+        {
+          "url": "https://www.deutschlandfunk.de/wirtschaft-106.rss",
+          "category": "WIRTSCHAFT"
+        },
+        {
+          "url": "https://www.deutschlandfunk.de/wissen-106.rss",
+          "category": "WISSENSCHAFT"
+        }
       ]
     },
     {
-      "id": "zdfheute", "name": "ZDFheute", "type": "rss", "language": "de",
-      "group": "Öffentlich-rechtlich", "color": "#FA7D19", "homepage": "https://www.zdfheute.de",
+      "id": "zdfheute",
+      "name": "ZDFheute",
+      "type": "rss",
+      "language": "de",
+      "group": "Öffentlich-rechtlich",
+      "color": "#FA7D19",
+      "homepage": "https://www.zdfheute.de",
       "feeds": [
-        { "url": "https://www.zdfheute.de/rss/zdf/nachrichten", "top": true }
+        {
+          "url": "https://www.zdfheute.de/rss/zdf/nachrichten",
+          "top": true
+        }
       ]
     },
     {
-      "id": "rbb24", "name": "rbb24", "type": "rss", "language": "de",
-      "group": "Öffentlich-rechtlich", "color": "#E3001B", "homepage": "https://www.rbb24.de",
+      "id": "rbb24",
+      "name": "rbb24",
+      "type": "rss",
+      "language": "de",
+      "group": "Öffentlich-rechtlich",
+      "color": "#E3001B",
+      "homepage": "https://www.rbb24.de",
       "feeds": [
-        { "url": "https://www.rbb24.de/index.xml/feed=rss.xml", "category": "BERLIN" },
-        { "url": "https://www.rbb24.de/politik/index.xml/feed=rss.xml", "category": "BERLIN" },
-        { "url": "https://www.rbb24.de/panorama/index.xml/feed=rss.xml", "category": "BERLIN" }
+        {
+          "url": "https://www.rbb24.de/index.xml/feed=rss.xml",
+          "category": "BERLIN"
+        },
+        {
+          "url": "https://www.rbb24.de/politik/index.xml/feed=rss.xml",
+          "category": "BERLIN"
+        },
+        {
+          "url": "https://www.rbb24.de/panorama/index.xml/feed=rss.xml",
+          "category": "BERLIN"
+        }
       ]
     },
     {
-      "id": "dw", "name": "Deutsche Welle", "type": "rss", "language": "de",
-      "group": "Öffentlich-rechtlich", "color": "#05B2FC", "homepage": "https://www.dw.com/de",
+      "id": "dw",
+      "name": "Deutsche Welle",
+      "type": "rss",
+      "language": "de",
+      "group": "Öffentlich-rechtlich",
+      "color": "#05B2FC",
+      "homepage": "https://www.dw.com/de",
       "feeds": [
-        { "url": "https://rss.dw.com/xml/rss-de-top", "top": true, "category": "INTERNATIONAL" },
-        { "url": "https://rss.dw.com/xml/rss-de-deutschland", "category": "NATIONAL" },
-        { "url": "https://rss.dw.com/xml/rss-de-all", "category": "INTERNATIONAL" }
+        {
+          "url": "https://rss.dw.com/xml/rss-de-top",
+          "top": true,
+          "category": "INTERNATIONAL"
+        },
+        {
+          "url": "https://rss.dw.com/xml/rss-de-deutschland",
+          "category": "NATIONAL"
+        },
+        {
+          "url": "https://rss.dw.com/xml/rss-de-all",
+          "category": "INTERNATIONAL"
+        }
       ]
     },
     {
-      "id": "sz", "name": "Süddeutsche Zeitung", "type": "rss", "language": "de",
-      "group": "Zeitungen", "color": "#29293A", "homepage": "https://www.sueddeutsche.de",
+      "id": "ntv",
+      "name": "n-tv",
+      "type": "rss",
+      "language": "de",
+      "group": "Nachrichtensender",
+      "color": "#C4001A",
+      "homepage": "https://www.n-tv.de",
       "feeds": [
-        { "url": "https://rss.sueddeutsche.de/rss/Topthemen", "top": true },
-        { "url": "https://rss.sueddeutsche.de/rss/Politik", "category": "POLITIK" },
-        { "url": "https://rss.sueddeutsche.de/rss/Wirtschaft", "category": "WIRTSCHAFT" },
-        { "url": "https://rss.sueddeutsche.de/rss/Wissen", "category": "WISSENSCHAFT" },
-        { "url": "https://rss.sueddeutsche.de/rss/Digital", "category": "TECHNOLOGIE" },
-        { "url": "https://rss.sueddeutsche.de/rss/Sport", "category": "SPORT" }
+        {
+          "url": "https://www.n-tv.de/rss",
+          "top": true
+        },
+        {
+          "url": "https://www.n-tv.de/politik/rss",
+          "category": "POLITIK"
+        },
+        {
+          "url": "https://www.n-tv.de/wirtschaft/rss",
+          "category": "WIRTSCHAFT"
+        },
+        {
+          "url": "https://www.n-tv.de/wissen/rss",
+          "category": "WISSENSCHAFT"
+        },
+        {
+          "url": "https://www.n-tv.de/technik/rss",
+          "category": "TECHNOLOGIE"
+        },
+        {
+          "url": "https://www.n-tv.de/sport/rss",
+          "category": "SPORT"
+        }
       ]
     },
     {
-      "id": "faz", "name": "FAZ", "type": "rss", "language": "de",
-      "group": "Zeitungen", "color": "#1F1F1F", "homepage": "https://www.faz.net",
+      "id": "taz",
+      "name": "taz",
+      "type": "rss",
+      "language": "de",
+      "group": "Zeitungen",
+      "color": "#D50D2E",
+      "homepage": "https://taz.de",
       "feeds": [
-        { "url": "https://www.faz.net/rss/aktuell/", "top": true },
-        { "url": "https://www.faz.net/rss/aktuell/politik/inland/", "category": "NATIONAL" },
-        { "url": "https://www.faz.net/rss/aktuell/politik/ausland/", "category": "INTERNATIONAL" },
-        { "url": "https://www.faz.net/rss/aktuell/wirtschaft/", "category": "WIRTSCHAFT" },
-        { "url": "https://www.faz.net/rss/aktuell/wissen/", "category": "WISSENSCHAFT" },
-        { "url": "https://www.faz.net/rss/aktuell/technik-motor/", "category": "TECHNOLOGIE" },
-        { "url": "https://www.faz.net/rss/aktuell/sport/", "category": "SPORT" }
+        {
+          "url": "https://taz.de/!p4608;rss/",
+          "top": true
+        },
+        {
+          "url": "https://taz.de/Politik/!p4615;rss/",
+          "category": "POLITIK"
+        },
+        {
+          "url": "https://taz.de/Berlin/!p4649;rss/",
+          "category": "BERLIN"
+        },
+        {
+          "url": "https://taz.de/Wirtschaft/!p4623;rss/",
+          "category": "WIRTSCHAFT"
+        },
+        {
+          "url": "https://taz.de/Sport/!p4646;rss/",
+          "category": "SPORT"
+        }
       ]
     },
     {
-      "id": "zeit", "name": "Die Zeit", "type": "rss", "language": "de",
-      "group": "Zeitungen", "color": "#000000", "homepage": "https://www.zeit.de",
+      "id": "guardian",
+      "name": "The Guardian",
+      "type": "rss",
+      "language": "en",
+      "group": "International",
+      "color": "#052962",
+      "homepage": "https://www.theguardian.com",
       "feeds": [
-        { "url": "https://newsfeed.zeit.de/index", "top": true },
-        { "url": "https://newsfeed.zeit.de/politik/index", "category": "POLITIK" },
-        { "url": "https://newsfeed.zeit.de/wirtschaft/index", "category": "WIRTSCHAFT" },
-        { "url": "https://newsfeed.zeit.de/digital/index", "category": "TECHNOLOGIE" },
-        { "url": "https://newsfeed.zeit.de/sport/index", "category": "SPORT" }
+        {
+          "url": "https://www.theguardian.com/world/rss",
+          "category": "INTERNATIONAL"
+        },
+        {
+          "url": "https://www.theguardian.com/business/rss",
+          "category": "WIRTSCHAFT"
+        },
+        {
+          "url": "https://www.theguardian.com/science/rss",
+          "category": "WISSENSCHAFT"
+        },
+        {
+          "url": "https://www.theguardian.com/technology/rss",
+          "category": "TECHNOLOGIE"
+        }
       ]
     },
     {
-      "id": "spiegel", "name": "Der Spiegel", "type": "rss", "language": "de",
-      "group": "Zeitungen", "color": "#E64415", "homepage": "https://www.spiegel.de",
+      "id": "bbc",
+      "name": "BBC News",
+      "type": "rss",
+      "language": "en",
+      "group": "International",
+      "color": "#B80000",
+      "homepage": "https://www.bbc.com/news",
       "feeds": [
-        { "url": "https://www.spiegel.de/schlagzeilen/index.rss", "top": true },
-        { "url": "https://www.spiegel.de/politik/index.rss", "category": "POLITIK" },
-        { "url": "https://www.spiegel.de/ausland/index.rss", "category": "INTERNATIONAL" },
-        { "url": "https://www.spiegel.de/wirtschaft/index.rss", "category": "WIRTSCHAFT" },
-        { "url": "https://www.spiegel.de/wissenschaft/index.rss", "category": "WISSENSCHAFT" },
-        { "url": "https://www.spiegel.de/netzwelt/index.rss", "category": "TECHNOLOGIE" },
-        { "url": "https://www.spiegel.de/sport/index.rss", "category": "SPORT" }
+        {
+          "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+          "top": true,
+          "category": "INTERNATIONAL"
+        },
+        {
+          "url": "https://feeds.bbci.co.uk/news/business/rss.xml",
+          "category": "WIRTSCHAFT"
+        },
+        {
+          "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+          "category": "TECHNOLOGIE"
+        },
+        {
+          "url": "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+          "category": "WISSENSCHAFT"
+        }
       ]
     },
     {
-      "id": "handelsblatt", "name": "Handelsblatt", "type": "rss", "language": "de",
-      "group": "Zeitungen", "color": "#EB6E0A", "homepage": "https://www.handelsblatt.com",
+      "id": "aljazeera",
+      "name": "Al Jazeera",
+      "type": "rss",
+      "language": "en",
+      "group": "International",
+      "color": "#C08A2B",
+      "homepage": "https://www.aljazeera.com",
       "feeds": [
-        { "url": "https://www.handelsblatt.com/contentexport/feed/top-themen", "top": true, "category": "WIRTSCHAFT" },
-        { "url": "https://www.handelsblatt.com/contentexport/feed/schlagzeilen", "category": "WIRTSCHAFT" },
-        { "url": "https://www.handelsblatt.com/contentexport/feed/politik", "category": "POLITIK" },
-        { "url": "https://www.handelsblatt.com/contentexport/feed/finanzen", "category": "WIRTSCHAFT" }
+        {
+          "url": "https://www.aljazeera.com/xml/rss/all.xml",
+          "category": "INTERNATIONAL"
+        }
       ]
     },
     {
-      "id": "tagesspiegel", "name": "Tagesspiegel", "type": "rss", "language": "de",
-      "group": "Zeitungen", "color": "#00305E", "homepage": "https://www.tagesspiegel.de",
+      "id": "npr",
+      "name": "NPR",
+      "type": "rss",
+      "language": "en",
+      "group": "International",
+      "color": "#237BBD",
+      "homepage": "https://www.npr.org",
       "feeds": [
-        { "url": "https://www.tagesspiegel.de/contentexport/feed/home", "top": true },
-        { "url": "https://www.tagesspiegel.de/contentexport/feed/berlin", "category": "BERLIN" },
-        { "url": "https://www.tagesspiegel.de/contentexport/feed/politik", "category": "POLITIK" },
-        { "url": "https://www.tagesspiegel.de/contentexport/feed/wirtschaft", "category": "WIRTSCHAFT" },
-        { "url": "https://www.tagesspiegel.de/contentexport/feed/wissen", "category": "WISSENSCHAFT" },
-        { "url": "https://www.tagesspiegel.de/contentexport/feed/sport", "category": "SPORT" }
+        {
+          "url": "https://feeds.npr.org/1001/rss.xml",
+          "category": "INTERNATIONAL"
+        }
       ]
     },
     {
-      "id": "guardian", "name": "The Guardian", "type": "guardian", "language": "en",
-      "group": "International", "color": "#052962", "homepage": "https://www.theguardian.com",
+      "id": "quarks",
+      "name": "Quarks (WDR)",
+      "type": "rss",
+      "language": "de",
+      "group": "Wissenschaft",
+      "color": "#00A0E6",
+      "homepage": "https://www.quarks.de",
       "feeds": [
-        { "url": "https://content.guardianapis.com/world", "category": "INTERNATIONAL" },
-        { "url": "https://content.guardianapis.com/business", "category": "WIRTSCHAFT" },
-        { "url": "https://content.guardianapis.com/science", "category": "WISSENSCHAFT" },
-        { "url": "https://content.guardianapis.com/technology", "category": "TECHNOLOGIE" }
+        {
+          "url": "https://www.quarks.de/feed/",
+          "category": "WISSENSCHAFT"
+        }
       ]
     },
     {
-      "id": "bbc", "name": "BBC News", "type": "rss", "language": "en",
-      "group": "International", "color": "#B80000", "homepage": "https://www.bbc.com/news",
+      "id": "scinexx",
+      "name": "scinexx",
+      "type": "rss",
+      "language": "de",
+      "group": "Wissenschaft",
+      "color": "#4E8F3A",
+      "homepage": "https://www.scinexx.de",
       "feeds": [
-        { "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "top": true, "category": "INTERNATIONAL" },
-        { "url": "https://feeds.bbci.co.uk/news/business/rss.xml", "category": "WIRTSCHAFT" },
-        { "url": "https://feeds.bbci.co.uk/news/technology/rss.xml", "category": "TECHNOLOGIE" },
-        { "url": "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml", "category": "WISSENSCHAFT" }
+        {
+          "url": "https://www.scinexx.de/feed/",
+          "category": "WISSENSCHAFT"
+        }
       ]
     },
     {
-      "id": "aljazeera", "name": "Al Jazeera", "type": "rss", "language": "en",
-      "group": "International", "color": "#C08A2B", "homepage": "https://www.aljazeera.com",
+      "id": "netzpolitik",
+      "name": "netzpolitik.org",
+      "type": "rss",
+      "language": "de",
+      "group": "Technik",
+      "color": "#3B5B7A",
+      "homepage": "https://netzpolitik.org",
       "feeds": [
-        { "url": "https://www.aljazeera.com/xml/rss/all.xml", "category": "INTERNATIONAL" }
-      ]
-    },
-    {
-      "id": "ft", "name": "Financial Times", "type": "rss", "language": "en",
-      "group": "International", "color": "#990F3D", "homepage": "https://www.ft.com",
-      "paywall": true, "enabledByDefault": false,
-      "feeds": [
-        { "url": "https://www.ft.com/world?format=rss", "category": "INTERNATIONAL" },
-        { "url": "https://www.ft.com/companies?format=rss", "category": "WIRTSCHAFT" },
-        { "url": "https://www.ft.com/technology?format=rss", "category": "TECHNOLOGIE" }
-      ]
-    },
-    {
-      "id": "economist", "name": "The Economist", "type": "rss", "language": "en",
-      "group": "International", "color": "#E3120B", "homepage": "https://www.economist.com",
-      "paywall": true, "enabledByDefault": false,
-      "feeds": [
-        { "url": "https://www.economist.com/international/rss.xml", "category": "INTERNATIONAL" },
-        { "url": "https://www.economist.com/finance-and-economics/rss.xml", "category": "WIRTSCHAFT" },
-        { "url": "https://www.economist.com/science-and-technology/rss.xml", "category": "WISSENSCHAFT" }
-      ]
-    },
-    {
-      "id": "spektrum", "name": "Spektrum der Wissenschaft", "type": "rss", "language": "de",
-      "group": "Wissenschaft", "color": "#004B87", "homepage": "https://www.spektrum.de",
-      "feeds": [
-        { "url": "https://www.spektrum.de/alias/rss/spektrum-de-rss-feed/996406", "category": "WISSENSCHAFT" }
-      ]
-    },
-    {
-      "id": "nature", "name": "Nature", "type": "rss", "language": "en",
-      "group": "Wissenschaft", "color": "#C12E2E", "homepage": "https://www.nature.com",
-      "feeds": [
-        { "url": "https://www.nature.com/nature.rss", "category": "WISSENSCHAFT" }
-      ]
-    },
-    {
-      "id": "quarks", "name": "Quarks (WDR)", "type": "rss", "language": "de",
-      "group": "Wissenschaft", "color": "#00A0E6", "homepage": "https://www.quarks.de",
-      "feeds": [
-        { "url": "https://www.quarks.de/feed/", "category": "WISSENSCHAFT" }
+        {
+          "url": "https://netzpolitik.org/feed/",
+          "category": "TECHNOLOGIE"
+        }
       ]
     }
   ]
